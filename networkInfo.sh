@@ -1,6 +1,11 @@
 #!/bin/bash
 
 outputDir=$HOME/networkInfo.txt 
+networkInterface=$(ip addr | awk '/state UP/ {print $2}' | sed 's/.$//')
+ipAddress=$(ifconfig ${networkInterface} | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
+IP=(${ipAddress//./ })
+DNS=$(grep "nameserver" /etc/resolv.conf | awk '{print $2}')
+
 echo "Collecting network information. Please wait..."
 echo "========== START ==========" > $outputDir 
 date >> $outputDir
@@ -26,15 +31,15 @@ echo "========== cat /etc/resolv.conf ==========" >> $outputDir
 cat /etc/resolv.conf >> $outputDir
 echo -e >> $outputDir
 
-echo "========== ping 127.0.0.53 ==========" >> $outputDir 
-ping -c 4 127.0.0.53 >> $outputDir
+echo "========== ping ${DNS} ==========" >> $outputDir 
+ping -c 4 $DNS >> $outputDir
 echo -e >> $outputDir
 
 echo "========== ping google.com ==========" >> $outputDir 
 ping -c 4 google.com >> $outputDir
 echo -e >> $outputDir
 
-echo "========== ping 192.168.3.1 ==========" >> $outputDir 
-ping -c 4 192.168.3.1 >> $outputDir
+echo "========== ping ${IP[0]}.${IP[1]}.${IP[2]}.1 ==========" >> $outputDir 
+ping -c 4 ${IP[0]}.${IP[1]}.${IP[2]}.1 >> $outputDir
 
 echo "Finished. See the results in $outputDir"
