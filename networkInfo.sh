@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+# networkInfo.sh
+#
+# Created by Jacek Lajdekci on 22.2.2020
+# Copyright © 2020 Jacek Lajdecki. All rights reserved.
+#
 
 function main(){
     if [ ! -d "${HOME}/networkInfo" ]; then
