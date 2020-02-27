@@ -3,7 +3,7 @@
 Theses are mostly my scripts I use for different stuff like setting up enviroments, troubleshooting, fun etc. You're welcome to using them.
 
 
-### debianNetworkInfo
+### networkInfo
 
 This is just a debian bash script that lets you easily troubleshoot your network. It gathers different information like ifconfig, route, interfaces, pinging gateway etc.
 
